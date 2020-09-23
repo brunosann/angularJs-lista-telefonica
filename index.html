@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pt-br" ng-app="myApp">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+  <title>AngularJs</title>
+</head>
+
+<body ng-controller="mainController">
+
+  <div class="container bg-light w-75 p-0">
+    <h1 class="text-center">{{app}}</h1>
+
+    <!-- Filtro de busca -->
+    <input ng-model="buscaName" class="form-control my-3" placeholder="Digite o NOME que deseja buscar..." type="text" id="filterName">
+
+    <div class="my-3 text-center">
+      <h4>Ordernar campos por:</h4>
+      <button class="btn btn-secondary" ng-click="ordenarPor('nome')">Nome</button>
+      <button class="btn btn-secondary" ng-click="ordenarPor('telefone')">Telefone</button>
+    </div>
+
+    <table ng-show="contatos.length > 0" class="table table-striped">
+      <tr>
+        <th>Nome</th>
+        <th>Telefone</th>
+        <th>Operadora</th>
+        <th>Data</th>
+      </tr>
+      <tr ng-repeat="contato in contatos | filter:{name: buscaName} | orderBy:orderName:direcao">
+        <td>{{contato.name | uppercase }}</td>
+        <td>{{contato.telefone }}</td>
+        <td>{{contato.operadora}}</td>
+        <td>{{contato.data | date: 'dd/MM/yyyy'}}</td>
+      </tr>
+    </table>
+
+    <form name="contatoForm" onsubmit="return false">
+      <input ng-model="user.name" class="form-control mb-3" type="text" name="nome" id="name" placeholder="Nome" ng-required="true" ng-minlength="5">
+
+      <input ng-model="user.telefone" class="form-control mb-3" type="text" name="tel" id="tel" placeholder="Telefone (9999-9999)" ng-required="true" ng-pattern="/^\d{4,5}-\d{4}$/">
+
+      <select ng-model="user.operadora" ng-options="operadora.nome as operadora.nome for operadora in operadoras" name="dd" id="operadoras" class="form-control mb-3" ng-required="true">
+        <option value="">Selecione uma Operadora</option>
+      </select>
+
+      <!-- msgs de erros -->
+
+      <!-- <div ng-messages="contatoForm.nome.$error">
+        <div class="alert alert-danger" ng-message="required">Preencha o campo Nome</div>
+      </div> -->
+
+      <div ng-if="contatoForm.nome.$error.required && contatoForm.nome.$dirty" class="alert alert-danger">Preencha o campo Nome</div>
+
+      <div ng-if="contatoForm.nome.$error.minlength" class="alert alert-danger">O campo Nome tem que ter no minimo 5 caracteres</div>
+
+      <div ng-if="contatoForm.tel.$error.required && contatoForm.tel.$dirty" class="alert alert-danger">Preencha o campo Telefone</div>
+
+      <div ng-if="contatoForm.tel.$error.pattern" class="alert alert-danger">O numero deve conter o formato DDDDD-DDDD</div>
+
+      <button ng-click="adicionar(user)" class="btn btn-primary btn-block" ng-disabled="contatoForm.$invalid">Adicionar</button>
+    </form>
+
+  </div>
+
+  <footer ng-include="'footer.html'"></footer>
+
+
+  <script src="./lib/angular.min.js"></script>
+  <script src="./lib/angular-messages.min.js"></script>
+  <script src="./script.js"></script>
+</body>
+
+</html>
