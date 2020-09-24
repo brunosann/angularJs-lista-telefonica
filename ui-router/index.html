@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="pt-br" ng-app="myRouter">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+  <title>Ui Router</title>
+</head>
+
+<body>
+  <div class="container">
+    <div class="row mx-auto">
+      <a class="btn btn-link" ui-sref-active="text-danger" ui-sref="home">Home</a>
+      <a class="btn btn-link" ui-sref-active="text-danger" ui-sref="sobre({id: 1, arrayParam: [1,2,3]})">Sobre</a>
+      <!-- <a class="btn btn-link" ui-sref-active="text-danger" ui-sref="contato">Contato</a> -->
+      <a class="btn btn-link" href="#/contato">Contato</a>
+    </div>
+  </div>
+
+  <div ui-view class="container"></div>
+
+  <script src="../lib/angular.min.js"></script>
+  <script src="https:////unpkg.com/@uirouter/angularjs/release/angular-ui-router.min.js"></script>
+  <script src="script.js"></script>
+</body>
+
+</html>
